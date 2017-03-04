@@ -23,13 +23,15 @@ Async-update demo.
 # Demo 1: async-lod-handling
 
 ```c#
+    rot = Quaternion.identity;
     AsyncLodFilter filter = GetComponent<AsyncLodFilter>();
 
     filter.OnAsyncUpdate += (dt) => {
-      rot = Quaternion.AngleAxis(30f * dt, Vector3.forward);
+      dRot = Quaternion.AngleAxis(30f * dt, Vector3.forward);
+      rot *= dRot;
     };
     filter.OnPostUpdate += (dt) => {
-      transform.rotation *= rot;
+      transform.rotation = rot;
     };
     filter.OnLevelChanged += (level) => {
       MeshFilter mf = GetComponent<MeshFilter>();
