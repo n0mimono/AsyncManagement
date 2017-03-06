@@ -7,6 +7,8 @@ namespace AsyncManagement {
   public class AsyncLodFilter : MonoBehaviour {
     private int level = -1;
 
+    public static int maxLevel = 3;
+
     public int split { get { return Mathf.Max(1, level + 1); } }
     private int count;
 
@@ -25,6 +27,9 @@ namespace AsyncManagement {
 
     void Start() {
       AsyncUpdateManager asyncUpdate = GameObject.FindObjectOfType<AsyncUpdateManager>();
+
+      // shuffle
+      count = (int)(UnityEngine.Random.value * (maxLevel + 1));
 
       asyncUpdate.AddTask(
         () => {
@@ -60,6 +65,7 @@ namespace AsyncManagement {
     }
 
     public void SetLevel(int level) {
+      level = Mathf.Clamp (level, 0, maxLevel);
       if (this.level == level) return;
 
       if (OnLevelChanged != null) {
