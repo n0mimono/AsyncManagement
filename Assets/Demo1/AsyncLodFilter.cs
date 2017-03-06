@@ -56,7 +56,7 @@ namespace AsyncManagement {
       OnLevelChanged += (level) => this.level = level;
       OnLevelChanged += (level) => useAsync = (level >= levelAsync);
 
-      SetActive(gameObject.activeInHierarchy);
+      SetActive(false);
     }
 
     public void SetLevel(int level) {
@@ -69,7 +69,6 @@ namespace AsyncManagement {
 
     public void SetActive(bool isActive) {
       this.isActive = isActive;
-      gameObject.SetActive(isActive);
     }
 
   }

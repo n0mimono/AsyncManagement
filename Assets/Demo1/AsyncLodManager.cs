@@ -36,6 +36,8 @@ namespace AsyncManagement {
 
       GameObject.FindObjectOfType<AsyncUpdateManager>().StartUpdate();
       yield return null;
+
+      SetActive (true);
     }
 
     void Update() {
@@ -71,6 +73,12 @@ namespace AsyncManagement {
       }
 
       Gizmos.matrix = mat;
+    }
+
+    public void SetActive(bool isActive) {
+      foreach (AsyncLodGroup group in groups) {
+        group.SetActive(isActive);
+      }
     }
 
   }

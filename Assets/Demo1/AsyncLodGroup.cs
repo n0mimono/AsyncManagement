@@ -16,5 +16,11 @@ namespace AsyncManagement {
       }
     }
 
+    public void SetActive(bool isActive) {
+      foreach (AsyncLodFilter filter in filters) {
+        filter.SetActive(isActive);
+      }
+    }
+
   }
 }
