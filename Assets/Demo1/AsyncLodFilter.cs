@@ -8,7 +8,7 @@ namespace AsyncManagement {
     private int level = -1;
 
     public static int maxLevel = 3;
-    public static Func<int,int> splitFunc;
+    public Func<int,int> splitFunc;
 
     private int count;
     private int split { get { return splitFunc(level); } }
