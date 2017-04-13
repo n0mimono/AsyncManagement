@@ -8,9 +8,10 @@ namespace AsyncManagement {
     private int level = -1;
 
     public static int maxLevel = 3;
+    public static Func<int,int> splitFunc;
 
-    public int split { get { return Mathf.Max(1, level + 1); } }
     private int count;
+    private int split { get { return splitFunc(level); } }
 
     public readonly int levelAsync = 2;
     private bool useAsync;
@@ -26,10 +27,14 @@ namespace AsyncManagement {
     public event LevelHandler OnLevelChanged;
 
     void Start() {
+      if (splitFunc == null) {
+        splitFunc = (level) => Mathf.Max(1, level + 1);
+      }
+
       AsyncUpdateManager asyncUpdate = GameObject.FindObjectOfType<AsyncUpdateManager>();
 
       // shuffle
-      count = (int)(UnityEngine.Random.value * (maxLevel + 1));
+      count = (int)(UnityEngine.Random.value * 100 * (maxLevel + 1));
 
       asyncUpdate.AddTask(
         () => {
