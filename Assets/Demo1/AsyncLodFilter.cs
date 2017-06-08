@@ -26,11 +26,7 @@ namespace AsyncManagement {
     public delegate void LevelHandler(int level);
     public event LevelHandler OnLevelChanged;
 
-    void Start() {
-      if (splitFunc == null) {
-        splitFunc = (level) => Mathf.Max(1, level + 1);
-      }
-
+    public void Initialize() {
       AsyncUpdateManager asyncUpdate = GameObject.FindObjectOfType<AsyncUpdateManager>();
 
       // shuffle
@@ -65,8 +61,6 @@ namespace AsyncManagement {
 
       OnLevelChanged += (level) => this.level = level;
       OnLevelChanged += (level) => useAsync = (level >= levelAsync);
-
-      SetActive(false);
     }
 
     public void SetLevel(int level) {

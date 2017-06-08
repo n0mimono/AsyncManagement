@@ -12,7 +12,9 @@ public class Demo1Object : MonoBehaviour {
     rot = Quaternion.identity;
 
     AsyncLodFilter filter = GetComponent<AsyncLodFilter>();
+    filter.Initialize ();
     filter.levelAsync = 2;
+    filter.splitFunc = (level) => Mathf.Max(1, level + 1);
 
     filter.AddAsyncUpdate (dt => {
       dRot = Quaternion.AngleAxis(30f * dt, Vector3.forward);
