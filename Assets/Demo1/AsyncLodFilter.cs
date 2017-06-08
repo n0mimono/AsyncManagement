@@ -13,7 +13,7 @@ namespace AsyncManagement {
     private int count;
     private int split { get { return splitFunc(level); } }
 
-    public readonly int levelAsync = 2;
+    public int levelAsync = maxLevel;
     private bool useAsync;
 
     private bool isActive;
@@ -80,6 +80,33 @@ namespace AsyncManagement {
 
     public void SetActive(bool isActive) {
       this.isActive = isActive;
+    }
+
+    public AsyncLodFilter AddPreUpdate(UpdateHandler onUpdate, Func<bool> predicate) {
+      OnPreUpdate += (dt) => {
+        if (predicate()) {
+          onUpdate(dt);
+        }
+      };
+      return this;
+    }
+
+    public AsyncLodFilter AddAsyncUpdate(UpdateHandler onUpdate, Func<bool> predicate) {
+      OnAsyncUpdate += (dt) => {
+        if (predicate()) {
+          onUpdate(dt);
+        }
+      };
+      return this;
+    }
+
+    public AsyncLodFilter AddPostUpdate(UpdateHandler onUpdate, Func<bool> predicate) {
+      OnPostUpdate += (dt) => {
+        if (predicate()) {
+          onUpdate(dt);
+        }
+      };
+      return this;
     }
 
   }

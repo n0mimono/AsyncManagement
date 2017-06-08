@@ -8,18 +8,19 @@ public class Demo1Object : MonoBehaviour {
   private Quaternion dRot;
 	private Quaternion rot;
 
-	void Start() {
+  void Start() {
     rot = Quaternion.identity;
 
     AsyncLodFilter filter = GetComponent<AsyncLodFilter>();
+    filter.levelAsync = 2;
 
-    filter.OnAsyncUpdate += (dt) => {
+    filter.AddAsyncUpdate (dt => {
       dRot = Quaternion.AngleAxis(30f * dt, Vector3.forward);
       rot *= dRot;
-    };
-    filter.OnPostUpdate += (dt) => {
+    }, () => true).AddPostUpdate (dt => {
       transform.rotation = rot;
-    };
+    }, () => true);
+
     filter.OnLevelChanged += (level) => {
       MeshFilter mf = GetComponent<MeshFilter>();
       mf.mesh = meshes[level];

@@ -63,11 +63,14 @@ namespace AsyncManagement {
 
       Gizmos.matrix = Camera.main.transform.localToWorldMatrix;
       for (int i = 0; i < distances.Length + 1; i++) {
+        float far = (i == distances.Length) ? Camera.main.farClipPlane : distances[i];
+        float near = (i == 0) ? Camera.main.nearClipPlane : distances[i - 1];
+
         Gizmos.DrawFrustum(
-          Camera.main.transform.position,
+          Vector3.forward * near,
           Camera.main.fieldOfView,
-          i == distances.Length ? Camera.main.farClipPlane : distances[i],
-          i == 0 ? Camera.main.nearClipPlane : distances[i - 1],
+          far,
+          near,
           Camera.main.aspect
         );
       }
